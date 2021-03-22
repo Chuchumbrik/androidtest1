@@ -15,12 +15,31 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    // count_money - количество основной валюты "денег"
+    // total_score - общее количество очков заработанных за игру
     static public int count_money = 0;
     static public int total_score = 0;
+
+    // add_money_tap - кол-во денег за одно нажатие
     int add_money_tap = 1;
+
+    // cost_buy_1_lvl - стоимость увлечения клика 1 лвл
+    // cost_buy_2_lvl - стоимость увлечения клика 2 лвл
+    // cost_buy_2_lvl - стоимость увлечения клика 3 лвл
     float cost_buy_1_lvl = 10;
     float cost_buy_2_lvl = 100;
     float cost_buy_3_lvl = 1000;
+
+    // count_buy_1_lvl - Количество купленных улучшений 1 лвл
+    // count_buy_2_lvl - Количество купленных улучшений 2 лвл
+    // count_buy_3_lvl - Количество купленных улучшений 3 лвл
+    int count_buy_1_lvl = 0;
+    int count_buy_2_lvl = 0;
+    int count_buy_3_lvl = 0;
+
+    public static boolean enabled_buy_1_lvl_auto = false;
+
+
     Button tap_button;
     Button button_buy_1_lvl;
     Button button_buy_2_lvl;
@@ -34,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
     TextView TextView_count_buy_1_lvl;
     TextView TextView_count_buy_2_lvl;
     TextView TextView_count_buy_3_lvl;
-    int count_buy_1_lvl = 0;
-    int count_buy_2_lvl = 0;
-    int count_buy_3_lvl = 0;
-
-    public static boolean enabled_buy_1_lvl_auto = false;
-
     TextView Shop;
 
     TextView TextView_add_count_money;

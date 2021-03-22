@@ -15,11 +15,15 @@ public class Improve extends AppCompatActivity {
 
     Button Close_shop;
 
+    // cost_buy_1_lvl_auto - стоимость улучшения автоклика 1 лвл
     float cost_buy_1_lvl_auto = 10;
+    // count_buy_1_lvl - Количество купленных улучшений автоклика 1 лвл
+    public static int count_buy_1_lvl_auto = 0;
+
     Button button_buy_1_lvl_auto;
     TextView TextView_cost_buy_1_lvl_auto;
     TextView TextView_count_buy_1_lvl_auto;
-    public static int count_buy_1_lvl_auto = 0;
+
     Timer timer;
     TimerTask mTimerTask;
 
