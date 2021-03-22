@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button reset;
 
+    Button test_1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,12 +104,22 @@ public class MainActivity extends AppCompatActivity {
         TextView_add_count_money = (TextView)findViewById(R.id.add_count_money);
         TextView_add_count_money.setText(add_money_tap + "");
 
-        Shop = (TextView)findViewById(R.id.shop);
+        Shop = (Button) findViewById(R.id.shop);
         Shop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save_data();
                 Intent intent = new Intent(MainActivity.this, Improve.class);
+                startActivity(intent);
+            }
+        });
+
+        test_1 = (Button) findViewById(R.id.test_1);
+        test_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save_data();
+                Intent intent = new Intent(MainActivity.this, test_1.class);
                 startActivity(intent);
             }
         });
