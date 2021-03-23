@@ -30,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
     //Значения по умолчанию для количества денег за один клик
     final int default_add_money_tap = 1;
 
+    // множитель денег за одно нажатие
+    float multiplier_add_money_tap;
+    // множители улучшений кликов
+    float multiplier_tap_1_lvl;
+    float multiplier_tap_2_lvl;
+    float multiplier_tap_3_lvl;
+    //Значения по умолчанию для множителя денег за один клик
+    final int default_multiplier_tap = 1;
+
     // cost_buy_1_lvl - стоимость увлечения клика 1 лвл
     // cost_buy_2_lvl - стоимость увлечения клика 2 лвл
     // cost_buy_3_lvl - стоимость увлечения клика 3 лвл
@@ -73,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
     TextView TextView_count_buy_1_lvl;
     TextView TextView_count_buy_2_lvl;
     TextView TextView_count_buy_3_lvl;
+
+    TextView TextView_multiplier_add_money_tap;
+    TextView TextView_multiplier_tap_1_lvl;
+    TextView TextView_multiplier_tap_2_lvl;
+    TextView TextView_multiplier_tap_3_lvl;
+
     TextView Shop;
 
     TextView TextView_add_count_money;
@@ -167,9 +182,12 @@ public class MainActivity extends AppCompatActivity {
         TextView_cost_buy_auto = (TextView)findViewById(R.id.cost_buy_auto);
         TextView_count_buy_auto = (TextView)findViewById(R.id.count_buy_auto);
         TextView_count_timer = (TextView)findViewById(R.id.count_timer);
+
+        TextView_multiplier_add_money_tap = (TextView)findViewById(R.id.TextView_multiplier_add_money_tap);
+        TextView_multiplier_tap_1_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_1_lvl);
+        TextView_multiplier_tap_2_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_2_lvl);
+        TextView_multiplier_tap_3_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_3_lvl);
     }
-
-
 
     void output_to_the_screen() {
         TextView_cost_buy_1_lvl.setText(cost_buy_1_lvl + "");
@@ -189,6 +207,11 @@ public class MainActivity extends AppCompatActivity {
         TextView_count_buy_auto.setText(count_buy_1_lvl_auto + "");
 
         TextView_count_timer.setText(count_timer + "");
+
+        TextView_multiplier_add_money_tap.setText(multiplier_add_money_tap + "");
+        TextView_multiplier_tap_1_lvl.setText(multiplier_tap_1_lvl + "");
+        TextView_multiplier_tap_2_lvl.setText(multiplier_tap_2_lvl + "");
+        TextView_multiplier_tap_3_lvl.setText(multiplier_tap_3_lvl + "");
     }
 
     void output_total_score() {
@@ -248,8 +271,11 @@ public class MainActivity extends AppCompatActivity {
         tap_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count_money += add_money_tap;
-                total_score(add_money_tap);
+                count_money += add_money_tap * multiplier_add_money_tap;
+
+                //Пришлось сделать математическое округление
+                int total_result = (int) Math.ceil(add_money_tap * multiplier_add_money_tap);
+                total_score(total_result);
                 output_count_money();
                 save_data();
             }
@@ -263,11 +289,47 @@ public class MainActivity extends AppCompatActivity {
                 if (count_money >= cost_buy_1_lvl) {
                     count_money -= cost_buy_1_lvl;
                     cost_buy_1_lvl *= 1.1;
-                    add_money_tap += 1;
+                    add_money_tap += 1 * multiplier_tap_1_lvl;
                     TextView_cost_buy_1_lvl.setText(cost_buy_1_lvl + "");
-                    TextView_add_count_money.setText(add_money_tap + "");
                     count_buy_1_lvl ++;
                     TextView_count_buy_1_lvl.setText(count_buy_1_lvl + "");
+
+                    //Увеличиваем множитель нажатия взависимости от количества улучшений
+                    switch (count_buy_1_lvl) {
+                        case 50:
+                            multiplier_add_money_tap += (float) 1.2;
+                            break;
+                        case 100:
+                            multiplier_add_money_tap += (float) 2;
+                            break;
+                        case 150:
+                            multiplier_add_money_tap += (float) 2.5;
+                            break;
+                        case 200:
+                            multiplier_add_money_tap += (float) 5;
+                            break;
+                    }
+
+                    //Увеличиваем множитель улучшения взависимости от количества улучшений
+                    switch (count_buy_1_lvl) {
+                        case 10:
+                        case 100:
+                            multiplier_tap_1_lvl += (float) 2;
+                            add_money_tap += 2 * count_buy_1_lvl;
+                            break;
+                        case 50:
+                        case 200:
+                            multiplier_tap_1_lvl += (float) 10;
+                            add_money_tap += 10 * count_buy_1_lvl;
+                            break;
+                        case 150:
+                            multiplier_tap_1_lvl += (float) 5;
+                            add_money_tap += 5 * count_buy_1_lvl;
+                            break;
+                    }
+                    TextView_add_count_money.setText(add_money_tap + "");
+                    TextView_multiplier_add_money_tap.setText(multiplier_add_money_tap + "");
+                    TextView_multiplier_tap_1_lvl.setText(multiplier_tap_1_lvl + "");
                     save_data();
                     output_count_money();
                 }
@@ -282,11 +344,47 @@ public class MainActivity extends AppCompatActivity {
                 if (count_money >= cost_buy_2_lvl) {
                     count_money -= cost_buy_2_lvl;
                     cost_buy_2_lvl *= 1.1;
-                    add_money_tap += 5;
+                    add_money_tap += 5 * multiplier_tap_2_lvl;
                     TextView_cost_buy_2_lvl.setText(cost_buy_2_lvl + "");
-                    TextView_add_count_money.setText(add_money_tap + "");
                     count_buy_2_lvl ++;
                     TextView_count_buy_2_lvl.setText(count_buy_2_lvl + "");
+
+                    //Увеличиваем множитель нажатия взависимости от количества улучшений
+                    switch (count_buy_2_lvl) {
+                        case 50:
+                            multiplier_add_money_tap += (float) 1.2;
+                            break;
+                        case 100:
+                            multiplier_add_money_tap += (float) 2;
+                            break;
+                        case 150:
+                            multiplier_add_money_tap += (float) 2.5;
+                            break;
+                        case 200:
+                            multiplier_add_money_tap += (float) 5;
+                            break;
+                    }
+
+                    //Увеличиваем множитель улучшения взависимости от количества улучшений
+                    switch (count_buy_2_lvl) {
+                        case 10:
+                        case 100:
+                            multiplier_tap_2_lvl += (float) 2;
+                            add_money_tap += 2 * count_buy_2_lvl * 5;
+                            break;
+                        case 50:
+                        case 200:
+                            multiplier_tap_2_lvl += (float) 10;
+                            add_money_tap += 10 * count_buy_2_lvl * 5;
+                            break;
+                        case 150:
+                            multiplier_tap_2_lvl += (float) 5;
+                            add_money_tap += 5 * count_buy_2_lvl * 5;
+                            break;
+                    }
+                    TextView_add_count_money.setText(add_money_tap + "");
+                    TextView_multiplier_add_money_tap.setText(multiplier_add_money_tap + "");
+                    TextView_multiplier_tap_2_lvl.setText(multiplier_tap_2_lvl + "");
                     save_data();
                     output_count_money();
                 }
@@ -300,12 +398,48 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (count_money >= cost_buy_3_lvl) {
                     count_money -= cost_buy_3_lvl;
-                    cost_buy_3_lvl *= 1.1;
-                    add_money_tap += 10;
+                    cost_buy_1_lvl *= 1.1;
+                    add_money_tap += 10 * multiplier_tap_3_lvl;
                     TextView_cost_buy_3_lvl.setText(cost_buy_3_lvl + "");
-                    TextView_add_count_money.setText(add_money_tap + "");
                     count_buy_3_lvl ++;
                     TextView_count_buy_3_lvl.setText(count_buy_3_lvl + "");
+
+                    //Увеличиваем множитель нажатия взависимости от количества улучшений
+                    switch (count_buy_3_lvl) {
+                        case 50:
+                            multiplier_add_money_tap += (float) 1.2;
+                            break;
+                        case 100:
+                            multiplier_add_money_tap += (float) 2;
+                            break;
+                        case 150:
+                            multiplier_add_money_tap += (float) 2.5;
+                            break;
+                        case 200:
+                            multiplier_add_money_tap += (float) 5;
+                            break;
+                    }
+
+                    //Увеличиваем множитель улучшения взависимости от количества улучшений
+                    switch (count_buy_3_lvl) {
+                        case 10:
+                        case 100:
+                            multiplier_tap_3_lvl += (float) 2;
+                            add_money_tap += 2 * count_buy_3_lvl * 10;
+                            break;
+                        case 50:
+                        case 200:
+                            multiplier_tap_3_lvl += (float) 10;
+                            add_money_tap += 10 * count_buy_3_lvl * 10;
+                            break;
+                        case 150:
+                            multiplier_tap_3_lvl += (float) 5;
+                            add_money_tap += 5 * count_buy_3_lvl * 10;
+                            break;
+                    }
+                    TextView_add_count_money.setText(add_money_tap + "");
+                    TextView_multiplier_add_money_tap.setText(multiplier_add_money_tap + "");
+                    TextView_multiplier_tap_3_lvl.setText(multiplier_tap_3_lvl + "");
                     save_data();
                     output_count_money();
                 }
@@ -328,6 +462,12 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("enabled_buy_1_lvl_auto", enabled_buy_1_lvl_auto);
         editor.putInt("count_buy_1_lvl_auto", count_buy_1_lvl_auto);
         editor.putFloat("cost_buy_1_lvl_auto", cost_buy_1_lvl_auto);
+
+        editor.putFloat("Multiplier_add_money_tap", multiplier_add_money_tap);
+        editor.putFloat("multiplier_tap_1_lvl", multiplier_tap_1_lvl);
+        editor.putFloat("multiplier_tap_2_lvl", multiplier_tap_2_lvl);
+        editor.putFloat("multiplier_tap_3_lvl", multiplier_tap_3_lvl);
+
         editor.commit();
     }
 
@@ -346,6 +486,12 @@ public class MainActivity extends AppCompatActivity {
         count_buy_1_lvl_auto = preferences.getInt("count_buy_1_lvl_auto", default_count_buy);
         cost_buy_1_lvl_auto = preferences.getFloat("cost_buy_1_lvl_auto", default_cost_buy_1_lvl);
 
+        multiplier_add_money_tap = preferences.getFloat("multiplier_add_money_tap", default_multiplier_tap);
+        multiplier_tap_1_lvl = preferences.getFloat("multiplier_tap_1_lvl", default_multiplier_tap);
+        multiplier_tap_2_lvl = preferences.getFloat("multiplier_tap_2_lvl", default_multiplier_tap);
+        multiplier_tap_3_lvl = preferences.getFloat("multiplier_tap_3_lvl", default_multiplier_tap);
+
+
         output_to_the_screen();
     }
 
@@ -362,6 +508,10 @@ public class MainActivity extends AppCompatActivity {
         enabled_buy_1_lvl_auto = false;
         count_buy_1_lvl_auto = default_count_buy;
         cost_buy_1_lvl_auto = default_cost_buy_1_lvl;
+        multiplier_add_money_tap = default_multiplier_tap;
+        multiplier_tap_1_lvl = default_multiplier_tap;
+        multiplier_tap_2_lvl = default_multiplier_tap;
+        multiplier_tap_3_lvl = default_multiplier_tap;
         save_data();
         restartApp();
     }
