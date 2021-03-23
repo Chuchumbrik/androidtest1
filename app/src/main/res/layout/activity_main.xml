@@ -236,4 +236,24 @@
         app:layout_constraintEnd_toStartOf="@+id/count_buy_auto"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="75dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="2dp"
+        android:text="Кол-во таймеров"
+        app:layout_constraintEnd_toStartOf="@+id/count_timer"
+        app:layout_constraintTop_toBottomOf="@+id/add_count_money" />
+
+    <TextView
+        android:id="@+id/count_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="498dp"
+        android:layout_marginEnd="20dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shop" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

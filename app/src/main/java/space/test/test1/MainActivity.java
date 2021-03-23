@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     //Переключатель задачи по таймеру автоклика
     public static boolean enabled_buy_1_lvl_auto = false;
 
+    public static int count_timer = 0;
+
 
     Button tap_button;
     Button button_buy_1_lvl;
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView TextView_cost_buy_auto;
     TextView TextView_count_buy_auto;
+    TextView TextView_count_timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +108,14 @@ public class MainActivity extends AppCompatActivity {
         click_handler();
 
         //Запуск таймера автокликера
-        if (enabled_buy_1_lvl_auto) {
+        if ((enabled_buy_1_lvl_auto) && (count_timer == 0)) {
             timer = new Timer();
             mTimerTask = new MyTimerTaskAddMoneyAuto();
 
             timer.schedule(mTimerTask, 1000, 1000);
+            MainActivity.count_timer ++;
         }
+        output_to_the_screen();
 
         class MyTimerTask extends TimerTask {
             @Override
@@ -120,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         output_count_money();
                         output_total_score();
-                        TextView_total_score.setText(total_score + "");
                         save_data();
                     }
                 });
@@ -162,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView_cost_buy_auto = (TextView)findViewById(R.id.cost_buy_auto);
         TextView_count_buy_auto = (TextView)findViewById(R.id.count_buy_auto);
+        TextView_count_timer = (TextView)findViewById(R.id.count_timer);
     }
 
 
@@ -180,8 +185,10 @@ public class MainActivity extends AppCompatActivity {
         output_count_money();
         output_total_score();
 
-        TextView_cost_buy_auto.setText(count_buy_1_lvl_auto + "");
-        TextView_count_buy_auto.setText(cost_buy_1_lvl_auto + "");
+        TextView_cost_buy_auto.setText(cost_buy_1_lvl_auto + "");
+        TextView_count_buy_auto.setText(count_buy_1_lvl_auto + "");
+
+        TextView_count_timer.setText(count_timer + "");
     }
 
     void output_total_score() {

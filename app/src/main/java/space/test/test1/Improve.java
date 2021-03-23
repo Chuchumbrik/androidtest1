@@ -62,12 +62,13 @@ public class Improve extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (MainActivity.count_money >= MainActivity.cost_buy_1_lvl_auto) {
-                    if (!(MainActivity.enabled_buy_1_lvl_auto) && (MainActivity.count_buy_1_lvl_auto == 0)) {
+                    if (!(MainActivity.enabled_buy_1_lvl_auto) && (MainActivity.count_timer == 0)) {
                         timer = new Timer();
                         mTimerTask = new MainActivity.MyTimerTaskAddMoneyAuto();
 
                         timer.schedule(mTimerTask, 1000, 1000);
                         MainActivity.enabled_buy_1_lvl_auto = true;
+                        MainActivity.count_timer ++;
                     }
 
                     MainActivity.count_money -= MainActivity.cost_buy_1_lvl_auto;
