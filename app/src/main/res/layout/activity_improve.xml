@@ -38,10 +38,10 @@
 
     <TextView
         android:id="@+id/TextView_count_buy_1_lvl_auto"
-        android:layout_width="23dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="43dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="140dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/button_buy_1_lvl_auto"
         app:layout_constraintTop_toTopOf="parent" />
