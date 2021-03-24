@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     final int default_add_money_tap = 1;
 
     //Общий множитель дохода
-    float total_multiplier;
-
+    static float total_multiplier;
     // множитель денег за одно нажатие
     float multiplier_add_money_tap;
     // множители улучшений кликов
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     TextView TextView_count_buy_2_lvl;
     TextView TextView_count_buy_3_lvl;
 
+    TextView TextView_total_multiplier;
     TextView TextView_multiplier_add_money_tap;
     TextView TextView_multiplier_tap_1_lvl;
     TextView TextView_multiplier_tap_2_lvl;
@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
         TextView_count_buy_auto = (TextView)findViewById(R.id.count_buy_auto);
         TextView_count_timer = (TextView)findViewById(R.id.count_timer);
 
+        TextView_total_multiplier = (TextView)findViewById(R.id.TextView_total_multiplier);
         TextView_multiplier_add_money_tap = (TextView)findViewById(R.id.TextView_multiplier_add_money_tap);
         TextView_multiplier_tap_1_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_1_lvl);
         TextView_multiplier_tap_2_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_2_lvl);
@@ -211,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView_count_timer.setText(count_timer + "");
 
+        TextView_total_multiplier.setText(total_multiplier+ "");
         TextView_multiplier_add_money_tap.setText(multiplier_add_money_tap + "");
         TextView_multiplier_tap_1_lvl.setText(multiplier_tap_1_lvl + "");
         TextView_multiplier_tap_2_lvl.setText(multiplier_tap_2_lvl + "");
@@ -258,10 +260,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class MyTimerTaskAddMoneyAuto extends TimerTask {
+
         @Override
         public void run() {
-            MainActivity.count_money += count_buy_1_lvl_auto;
-            MainActivity.total_score += count_buy_1_lvl_auto;
+            MainActivity.count_money += count_buy_1_lvl_auto * total_multiplier;
+            MainActivity.total_score += count_buy_1_lvl_auto * total_multiplier;
         }
     }
 
@@ -292,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                 if (count_money >= cost_buy_1_lvl) {
                     count_money -= cost_buy_1_lvl;
                     cost_buy_1_lvl *= 1.01;
-                    add_money_tap += 1 * multiplier_tap_1_lvl;
+                    add_money_tap += 1 * multiplier_tap_1_lvl * total_multiplier;
                     TextView_cost_buy_1_lvl.setText(cost_buy_1_lvl + "");
                     count_buy_1_lvl ++;
                     TextView_count_buy_1_lvl.setText(count_buy_1_lvl + "");
@@ -318,16 +321,16 @@ public class MainActivity extends AppCompatActivity {
                         case 10:
                         case 100:
                             multiplier_tap_1_lvl += (float) 2;
-                            add_money_tap += 2 * count_buy_1_lvl;
+                            add_money_tap += 2 * count_buy_1_lvl * total_multiplier;
                             break;
                         case 50:
                         case 200:
                             multiplier_tap_1_lvl += (float) 10;
-                            add_money_tap += 10 * count_buy_1_lvl;
+                            add_money_tap += 10 * count_buy_1_lvl * total_multiplier;
                             break;
                         case 150:
                             multiplier_tap_1_lvl += (float) 5;
-                            add_money_tap += 5 * count_buy_1_lvl;
+                            add_money_tap += 5 * count_buy_1_lvl * total_multiplier;
                             break;
                     }
                     TextView_add_count_money.setText(add_money_tap + "");
@@ -347,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
                 if (count_money >= cost_buy_2_lvl) {
                     count_money -= cost_buy_2_lvl;
                     cost_buy_2_lvl *= 1.01;
-                    add_money_tap += 5 * multiplier_tap_2_lvl;
+                    add_money_tap += 5 * multiplier_tap_2_lvl * total_multiplier;
                     TextView_cost_buy_2_lvl.setText(cost_buy_2_lvl + "");
                     count_buy_2_lvl ++;
                     TextView_count_buy_2_lvl.setText(count_buy_2_lvl + "");
@@ -373,16 +376,16 @@ public class MainActivity extends AppCompatActivity {
                         case 10:
                         case 100:
                             multiplier_tap_2_lvl += (float) 2;
-                            add_money_tap += 2 * count_buy_2_lvl * 5;
+                            add_money_tap += 2 * count_buy_2_lvl * 5 * total_multiplier;
                             break;
                         case 50:
                         case 200:
                             multiplier_tap_2_lvl += (float) 10;
-                            add_money_tap += 10 * count_buy_2_lvl * 5;
+                            add_money_tap += 10 * count_buy_2_lvl * 5 * total_multiplier;
                             break;
                         case 150:
                             multiplier_tap_2_lvl += (float) 5;
-                            add_money_tap += 5 * count_buy_2_lvl * 5;
+                            add_money_tap += 5 * count_buy_2_lvl * 5 * total_multiplier;
                             break;
                     }
                     TextView_add_count_money.setText(add_money_tap + "");
@@ -402,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
                 if (count_money >= cost_buy_3_lvl) {
                     count_money -= cost_buy_3_lvl;
                     cost_buy_3_lvl *= 1.01;
-                    add_money_tap += 10 * multiplier_tap_3_lvl;
+                    add_money_tap += 10 * multiplier_tap_3_lvl * total_multiplier;
                     TextView_cost_buy_3_lvl.setText(cost_buy_3_lvl + "");
                     count_buy_3_lvl ++;
                     TextView_count_buy_3_lvl.setText(count_buy_3_lvl + "");
@@ -411,6 +414,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (count_buy_3_lvl) {
                         case 10:
                             multiplier_add_money_tap += (float) 1.2;
+                            total_multiplier = 2;
                             break;
                         case 100:
                             multiplier_add_money_tap += (float) 2;
@@ -428,18 +432,19 @@ public class MainActivity extends AppCompatActivity {
                         case 10:
                         case 100:
                             multiplier_tap_3_lvl += (float) 2;
-                            add_money_tap += 2 * count_buy_3_lvl * 10;
+                            add_money_tap += 2 * count_buy_3_lvl * 10 * total_multiplier;
                             break;
                         case 50:
                         case 200:
                             multiplier_tap_3_lvl += (float) 10;
-                            add_money_tap += 10 * count_buy_3_lvl * 10;
+                            add_money_tap += 10 * count_buy_3_lvl * 10 * total_multiplier;
                             break;
                         case 150:
                             multiplier_tap_3_lvl += (float) 5;
-                            add_money_tap += 5 * count_buy_3_lvl * 10;
+                            add_money_tap += 5 * count_buy_3_lvl * 10 * total_multiplier;
                             break;
                     }
+                    TextView_total_multiplier.setText(total_multiplier+ "");
                     TextView_add_count_money.setText(add_money_tap + "");
                     TextView_multiplier_add_money_tap.setText(multiplier_add_money_tap + "");
                     TextView_multiplier_tap_3_lvl.setText(multiplier_tap_3_lvl + "");
@@ -495,7 +500,6 @@ public class MainActivity extends AppCompatActivity {
         multiplier_tap_1_lvl = preferences.getFloat("multiplier_tap_1_lvl", default_multiplier);
         multiplier_tap_2_lvl = preferences.getFloat("multiplier_tap_2_lvl", default_multiplier);
         multiplier_tap_3_lvl = preferences.getFloat("multiplier_tap_3_lvl", default_multiplier);
-
 
         output_to_the_screen();
     }

@@ -7,6 +7,15 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView18"
+        android:layout_width="46dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="1dp"
+        android:text="ОМД"
+        app:layout_constraintEnd_toStartOf="@+id/TextView_total_multiplier"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
         android:id="@+id/TextView_multiplier_add_money_tap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -287,7 +296,7 @@
         android:id="@+id/textView6"
         android:layout_width="75dp"
         android:layout_height="33dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="15dp"
         android:text="Кол-во таймеров"
         app:layout_constraintEnd_toStartOf="@+id/count_timer"
         app:layout_constraintTop_toBottomOf="@+id/shop" />
@@ -296,8 +305,8 @@
         android:id="@+id/count_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shop" />
@@ -329,5 +338,15 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toBottomOf="@+id/TextView_cost_buy_3_lvl" />
+
+    <TextView
+        android:id="@+id/TextView_total_multiplier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/count_timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
