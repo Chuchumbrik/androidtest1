@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     // count_money - количество основной валюты "денег"
     // total_score - общее количество очков заработанных за игру
-    static public int count_money = 0;
-    static public int total_score = 0;
+    static public int count_money;
+    static public int total_score;
     //Значения по умолчанию для количества денег и общего счета
     final int default_money_and_score = 0;
 
@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     //Значения по умолчанию для количества денег за один клик
     final int default_add_money_tap = 1;
 
+    //Общий множитель дохода
+    float total_multiplier;
+
     // множитель денег за одно нажатие
     float multiplier_add_money_tap;
     // множители улучшений кликов
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     float multiplier_tap_2_lvl;
     float multiplier_tap_3_lvl;
     //Значения по умолчанию для множителя денег за один клик
-    final int default_multiplier_tap = 1;
+    final int default_multiplier = 1;
 
     // cost_buy_1_lvl - стоимость увлечения клика 1 лвл
     // cost_buy_2_lvl - стоимость увлечения клика 2 лвл
@@ -288,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (count_money >= cost_buy_1_lvl) {
                     count_money -= cost_buy_1_lvl;
-                    cost_buy_1_lvl *= 1.1;
+                    cost_buy_1_lvl *= 1.01;
                     add_money_tap += 1 * multiplier_tap_1_lvl;
                     TextView_cost_buy_1_lvl.setText(cost_buy_1_lvl + "");
                     count_buy_1_lvl ++;
@@ -343,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (count_money >= cost_buy_2_lvl) {
                     count_money -= cost_buy_2_lvl;
-                    cost_buy_2_lvl *= 1.1;
+                    cost_buy_2_lvl *= 1.01;
                     add_money_tap += 5 * multiplier_tap_2_lvl;
                     TextView_cost_buy_2_lvl.setText(cost_buy_2_lvl + "");
                     count_buy_2_lvl ++;
@@ -398,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (count_money >= cost_buy_3_lvl) {
                     count_money -= cost_buy_3_lvl;
-                    cost_buy_3_lvl *= 1.1;
+                    cost_buy_3_lvl *= 1.01;
                     add_money_tap += 10 * multiplier_tap_3_lvl;
                     TextView_cost_buy_3_lvl.setText(cost_buy_3_lvl + "");
                     count_buy_3_lvl ++;
@@ -463,7 +466,8 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("count_buy_1_lvl_auto", count_buy_1_lvl_auto);
         editor.putFloat("cost_buy_1_lvl_auto", cost_buy_1_lvl_auto);
 
-        editor.putFloat("Multiplier_add_money_tap", multiplier_add_money_tap);
+        editor.putFloat("total_multiplier", total_multiplier);
+        editor.putFloat("multiplier_add_money_tap", multiplier_add_money_tap);
         editor.putFloat("multiplier_tap_1_lvl", multiplier_tap_1_lvl);
         editor.putFloat("multiplier_tap_2_lvl", multiplier_tap_2_lvl);
         editor.putFloat("multiplier_tap_3_lvl", multiplier_tap_3_lvl);
@@ -486,10 +490,11 @@ public class MainActivity extends AppCompatActivity {
         count_buy_1_lvl_auto = preferences.getInt("count_buy_1_lvl_auto", default_count_buy);
         cost_buy_1_lvl_auto = preferences.getFloat("cost_buy_1_lvl_auto", default_cost_buy_1_lvl);
 
-        multiplier_add_money_tap = preferences.getFloat("multiplier_add_money_tap", default_multiplier_tap);
-        multiplier_tap_1_lvl = preferences.getFloat("multiplier_tap_1_lvl", default_multiplier_tap);
-        multiplier_tap_2_lvl = preferences.getFloat("multiplier_tap_2_lvl", default_multiplier_tap);
-        multiplier_tap_3_lvl = preferences.getFloat("multiplier_tap_3_lvl", default_multiplier_tap);
+        total_multiplier = preferences.getFloat("total_multiplier", default_multiplier);
+        multiplier_add_money_tap = preferences.getFloat("multiplier_add_money_tap", default_multiplier);
+        multiplier_tap_1_lvl = preferences.getFloat("multiplier_tap_1_lvl", default_multiplier);
+        multiplier_tap_2_lvl = preferences.getFloat("multiplier_tap_2_lvl", default_multiplier);
+        multiplier_tap_3_lvl = preferences.getFloat("multiplier_tap_3_lvl", default_multiplier);
 
 
         output_to_the_screen();
@@ -508,10 +513,12 @@ public class MainActivity extends AppCompatActivity {
         enabled_buy_1_lvl_auto = false;
         count_buy_1_lvl_auto = default_count_buy;
         cost_buy_1_lvl_auto = default_cost_buy_1_lvl;
-        multiplier_add_money_tap = default_multiplier_tap;
-        multiplier_tap_1_lvl = default_multiplier_tap;
-        multiplier_tap_2_lvl = default_multiplier_tap;
-        multiplier_tap_3_lvl = default_multiplier_tap;
+
+        total_multiplier = default_multiplier;
+        multiplier_add_money_tap = default_multiplier;
+        multiplier_tap_1_lvl = default_multiplier;
+        multiplier_tap_2_lvl = default_multiplier;
+        multiplier_tap_3_lvl = default_multiplier;
         save_data();
         restartApp();
     }

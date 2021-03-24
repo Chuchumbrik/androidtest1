@@ -28,7 +28,6 @@ public class Improve extends AppCompatActivity {
         setContentView(R.layout.activity_improve);
 
         init();
-        //load_save_data();
         output_to_the_screen();
         click_handler();
 
@@ -90,11 +89,4 @@ public class Improve extends AppCompatActivity {
         editor.commit();
     }
 
-    void load_save_data() {
-        MainActivity.preferences = getPreferences(MODE_PRIVATE);
-        MainActivity.cost_buy_1_lvl_auto = MainActivity.preferences.getFloat("cost_buy_1_lvl_auto", MainActivity.default_cost_buy_1_lvl);
-        MainActivity.count_buy_1_lvl_auto = MainActivity.preferences.getInt("count_buy_1_lvl_auto", MainActivity.default_count_buy);
-
-        output_to_the_screen();
-    }
 }
