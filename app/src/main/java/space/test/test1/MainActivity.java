@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Увеличиваем множитель нажатия взависимости от количества улучшений
                     switch (count_buy_1_lvl) {
-                        case 50:
+                        case 10:
                             multiplier_add_money_tap += (float) 1.2;
                             break;
                         case 100:
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Увеличиваем множитель нажатия взависимости от количества улучшений
                     switch (count_buy_2_lvl) {
-                        case 50:
+                        case 10:
                             multiplier_add_money_tap += (float) 1.2;
                             break;
                         case 100:
@@ -398,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (count_money >= cost_buy_3_lvl) {
                     count_money -= cost_buy_3_lvl;
-                    cost_buy_1_lvl *= 1.1;
+                    cost_buy_3_lvl *= 1.1;
                     add_money_tap += 10 * multiplier_tap_3_lvl;
                     TextView_cost_buy_3_lvl.setText(cost_buy_3_lvl + "");
                     count_buy_3_lvl ++;
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Увеличиваем множитель нажатия взависимости от количества улучшений
                     switch (count_buy_3_lvl) {
-                        case 50:
+                        case 10:
                             multiplier_add_money_tap += (float) 1.2;
                             break;
                         case 100:
