@@ -26,11 +26,9 @@ public class Improve extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_improve);
-
         init();
         output_to_the_screen();
         click_handler();
-
     }
 
     void init() {

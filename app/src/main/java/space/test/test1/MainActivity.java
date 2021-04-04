@@ -2,6 +2,7 @@ package space.test.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,7 +12,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -67,8 +73,17 @@ public class MainActivity extends AppCompatActivity {
 
     //Переключатель задачи по таймеру автоклика
     public static boolean enabled_buy_1_lvl_auto = false;
-
+    //Количество таймеров для автокликера
     public static int count_timer = 0;
+
+    //вариации сколько покупок за раз делается, привязанные к радиокнопкам
+    final int buy_count_x1 = 1;
+    final int buy_count_x5 = 5;
+    final int buy_count_x10 = 10;
+    final int buy_count_x100 = 100;
+
+    // выбранное количество покупок за раз
+    int buy_count;
 
 
     Button tap_button;
@@ -107,6 +122,21 @@ public class MainActivity extends AppCompatActivity {
     TextView TextView_cost_buy_auto;
     TextView TextView_count_buy_auto;
     TextView TextView_count_timer;
+
+    RadioGroup RadioGroup_buy_count_group;
+    RadioButton RadioButton_buy_count_x1;
+    RadioButton RadioButton_buy_count_x5;
+    RadioButton RadioButton_buy_count_x10;
+    RadioButton RadioButton_buy_count_x100;
+
+    Button shop_appearance;
+    Button shop_hidde;
+    FrameLayout FrameLayout_shop_test;
+    private Animation Animation_shop_appearance;
+    private Animation Animation_shop_hidde;
+    ObjectAnimator ObjectAnimation_shop_appearance;
+    ObjectAnimator ObjectAnimation_shop_hidde;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +221,18 @@ public class MainActivity extends AppCompatActivity {
         TextView_multiplier_tap_1_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_1_lvl);
         TextView_multiplier_tap_2_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_2_lvl);
         TextView_multiplier_tap_3_lvl = (TextView)findViewById(R.id.TextView_multiplier_tap_3_lvl);
+
+        RadioGroup_buy_count_group = (RadioGroup)findViewById(R.id.RadioGroup_buy_count_group);
+        RadioButton_buy_count_x1 = (RadioButton)findViewById(R.id.RadioButton_buy_count_x1);
+        RadioButton_buy_count_x5 = (RadioButton)findViewById(R.id.RadioButton_buy_count_x5);
+        RadioButton_buy_count_x10 = (RadioButton)findViewById(R.id.RadioButton_buy_count_x10);
+        RadioButton_buy_count_x100 = (RadioButton)findViewById(R.id.RadioButton_buy_count_x100);
+
+        shop_appearance = (Button) findViewById(R.id.shop_appearance);
+        shop_hidde = (Button) findViewById(R.id.shop_hidde);
+        FrameLayout_shop_test = (FrameLayout)findViewById(R.id.FrameLayout_shop_test);
+        Animation_shop_appearance = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_appearence);
+        Animation_shop_hidde = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_hidde);
     }
 
     void output_to_the_screen() {
@@ -217,6 +259,31 @@ public class MainActivity extends AppCompatActivity {
         TextView_multiplier_tap_1_lvl.setText(multiplier_tap_1_lvl + "");
         TextView_multiplier_tap_2_lvl.setText(multiplier_tap_2_lvl + "");
         TextView_multiplier_tap_3_lvl.setText(multiplier_tap_3_lvl + "");
+
+        int cost_buy_local;
+        switch (buy_count) {
+            default:
+            case 1:
+                RadioButton_buy_count_x1.setChecked(true);
+                cost_buy_local = (int) (cost_buy_1_lvl * buy_count);
+                TextView_cost_buy_1_lvl.setText(cost_buy_local + "");
+                break;
+            case 5:
+                RadioButton_buy_count_x5.setChecked(true);
+                cost_buy_local = (int) (cost_buy_1_lvl * buy_count);
+                TextView_cost_buy_1_lvl.setText(cost_buy_local + "");
+                break;
+            case 10:
+                RadioButton_buy_count_x10.setChecked(true);
+                cost_buy_local = (int) (cost_buy_1_lvl * buy_count);
+                TextView_cost_buy_1_lvl.setText(cost_buy_local + "");
+                break;
+            case 100:
+                RadioButton_buy_count_x100.setChecked(true);
+                cost_buy_local = (int) (cost_buy_1_lvl * buy_count);
+                TextView_cost_buy_1_lvl.setText(cost_buy_local + "");
+                break;
+        }
     }
 
     void output_total_score() {
@@ -257,10 +324,58 @@ public class MainActivity extends AppCompatActivity {
         button_buy_1_lvl();
         button_buy_2_lvl();
         button_buy_3_lvl();
+
+        View.OnClickListener radioButtonClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioButton rb = (RadioButton)v;
+                switch (rb.getId()) {
+                    default:
+                    case R.id.RadioButton_buy_count_x1:
+                        buy_count = buy_count_x1;
+                        break;
+                    case R.id.RadioButton_buy_count_x5:
+                        buy_count = buy_count_x5;
+                        break;
+                    case R.id.RadioButton_buy_count_x10:
+                        buy_count = buy_count_x10;
+                        break;
+                    case R.id.RadioButton_buy_count_x100:
+                        buy_count = buy_count_x100;
+                        break;
+                }
+                for (int i = 0; i < buy_count; i++) {
+                    cost_buy_1_lvl *= 1.01;
+                }
+                TextView_cost_buy_1_lvl.setText(cost_buy_1_lvl + "");
+            }
+        };
+
+        RadioButton_buy_count_x1.setOnClickListener(radioButtonClickListener);
+        RadioButton_buy_count_x5.setOnClickListener(radioButtonClickListener);
+        RadioButton_buy_count_x10.setOnClickListener(radioButtonClickListener);
+        RadioButton_buy_count_x100.setOnClickListener(radioButtonClickListener);
+
+        shop_appearance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimation_shop_appearance = ObjectAnimator.ofFloat(FrameLayout_shop_test, "y", 1300 );
+                ObjectAnimation_shop_appearance.setDuration(1500);
+                ObjectAnimation_shop_appearance.start();
+            }
+        });
+
+        shop_hidde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimation_shop_appearance = ObjectAnimator.ofFloat(FrameLayout_shop_test, "y", 3000);
+                ObjectAnimation_shop_appearance.setDuration(2000);
+                ObjectAnimation_shop_appearance.start();
+            }
+        });
     }
 
     public static class MyTimerTaskAddMoneyAuto extends TimerTask {
-
         @Override
         public void run() {
             MainActivity.count_money += count_buy_1_lvl_auto * total_multiplier;
@@ -289,15 +404,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void button_buy_1_lvl() {
+
+
         button_buy_1_lvl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (count_money >= cost_buy_1_lvl) {
-                    count_money -= cost_buy_1_lvl;
-                    cost_buy_1_lvl *= 1.01;
-                    add_money_tap += 1 * multiplier_tap_1_lvl * total_multiplier;
-                    TextView_cost_buy_1_lvl.setText(cost_buy_1_lvl + "");
-                    count_buy_1_lvl ++;
+                float cost_buy = (cost_buy_1_lvl * buy_count);
+
+                if (count_money >= cost_buy) {
+                    count_money -= cost_buy;
+                    for (int i = 0; i < buy_count; i++) {
+                        cost_buy_1_lvl *= 1.01;
+                    }
+                    add_money_tap += buy_count * multiplier_tap_1_lvl * total_multiplier;
+                    TextView_cost_buy_1_lvl.setText(cost_buy + "");
+                    count_buy_1_lvl += buy_count;
                     TextView_count_buy_1_lvl.setText(count_buy_1_lvl + "");
 
                     //Увеличиваем множитель нажатия взависимости от количества улучшений
@@ -477,6 +598,8 @@ public class MainActivity extends AppCompatActivity {
         editor.putFloat("multiplier_tap_2_lvl", multiplier_tap_2_lvl);
         editor.putFloat("multiplier_tap_3_lvl", multiplier_tap_3_lvl);
 
+        editor.putInt("buy_count", buy_count);
+
         editor.commit();
     }
 
@@ -500,6 +623,8 @@ public class MainActivity extends AppCompatActivity {
         multiplier_tap_1_lvl = preferences.getFloat("multiplier_tap_1_lvl", default_multiplier);
         multiplier_tap_2_lvl = preferences.getFloat("multiplier_tap_2_lvl", default_multiplier);
         multiplier_tap_3_lvl = preferences.getFloat("multiplier_tap_3_lvl", default_multiplier);
+
+        buy_count = preferences.getInt("buy_count", buy_count_x1);
 
         output_to_the_screen();
     }
