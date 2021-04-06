@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     // add_money_tap - кол-во денег за одно нажатие
     int add_money_tap;
-    //Значения по умолчанию для количества денег за один клик
+    //Значения по умолчанию для количества денег за один клик asdasdasdasdasdasd
     final int default_add_money_tap = 1;
 
     //Общий множитель дохода
