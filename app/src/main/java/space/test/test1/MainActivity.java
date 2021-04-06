@@ -1,6 +1,7 @@
 package space.test.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.transition.Slide;
 
 import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
@@ -11,13 +12,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -129,11 +133,12 @@ public class MainActivity extends AppCompatActivity {
     RadioButton RadioButton_buy_count_x10;
     RadioButton RadioButton_buy_count_x100;
 
-    Button shop_appearance;
+    ImageButton shop_appearance;
     Button shop_hidde;
-    FrameLayout FrameLayout_shop_test;
-    private Animation Animation_shop_appearance;
-    private Animation Animation_shop_hidde;
+    ScrollView ScrollView;
+    //FrameLayout FrameLayout_shop_test;
+    //private Animation Animation_shop_appearance;
+    //private Animation Animation_shop_hidde;
     ObjectAnimator ObjectAnimation_shop_appearance;
     ObjectAnimator ObjectAnimation_shop_hidde;
 
@@ -228,11 +233,12 @@ public class MainActivity extends AppCompatActivity {
         RadioButton_buy_count_x10 = (RadioButton)findViewById(R.id.RadioButton_buy_count_x10);
         RadioButton_buy_count_x100 = (RadioButton)findViewById(R.id.RadioButton_buy_count_x100);
 
-        shop_appearance = (Button) findViewById(R.id.shop_appearance);
+        shop_appearance = (ImageButton) findViewById(R.id.shop_appearance);
         shop_hidde = (Button) findViewById(R.id.shop_hidde);
-        FrameLayout_shop_test = (FrameLayout)findViewById(R.id.FrameLayout_shop_test);
-        Animation_shop_appearance = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_appearence);
-        Animation_shop_hidde = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_hidde);
+        ScrollView = (ScrollView) findViewById(R.id.ScrollView);
+        //FrameLayout_shop_test = (FrameLayout)findViewById(R.id.FrameLayout_shop_test);
+        //Animation_shop_appearance = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_appearence);
+        //Animation_shop_hidde = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_hidde);
     }
 
     void output_to_the_screen() {
@@ -356,23 +362,52 @@ public class MainActivity extends AppCompatActivity {
         RadioButton_buy_count_x10.setOnClickListener(radioButtonClickListener);
         RadioButton_buy_count_x100.setOnClickListener(radioButtonClickListener);
 
-        shop_appearance.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener bottomMenuClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjectAnimation_shop_appearance = ObjectAnimator.ofFloat(FrameLayout_shop_test, "y", 1300 );
-                ObjectAnimation_shop_appearance.setDuration(1500);
-                ObjectAnimation_shop_appearance.start();
+                animationBottomMenu.animationBottomMenu(ScrollView);
             }
-        });
+        };
 
-        shop_hidde.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ObjectAnimation_shop_appearance = ObjectAnimator.ofFloat(FrameLayout_shop_test, "y", 3000);
-                ObjectAnimation_shop_appearance.setDuration(2000);
-                ObjectAnimation_shop_appearance.start();
+        shop_appearance.setOnClickListener(bottomMenuClickListener);
+        shop_hidde.setOnClickListener(bottomMenuClickListener);
+    }
+
+
+    //Класс отвечающий за анимацию нижнего меню
+    private static class animationBottomMenu {
+        //Основной метод, в который передается ScrollView
+        //Настройка анимации
+        //Выборка в какое состояние должен перейти контейнер
+        public static void animationBottomMenu(ScrollView scrollView) {
+            TransitionManager.beginDelayedTransition(scrollView, makeSlideTransition());
+            switch (scrollView.getVisibility()){
+                case View.VISIBLE:
+                        itemBottomMenuHidde(scrollView);
+                    break;
+                case View.GONE:
+                case View.INVISIBLE:
+                    itemBottomMenuVisible(scrollView);
+                    break;
             }
-        });
+        }
+
+        private static void itemBottomMenuHidde(ScrollView scrollView) {
+            scrollView.setVisibility(View.GONE);
+        }
+
+        private static void itemBottomMenuVisible(ScrollView scrollView) {
+            scrollView.setVisibility(View.VISIBLE);
+        }
+
+        //Присет slide анимации
+        private static Slide makeSlideTransition() {
+            Slide slide = new Slide();
+            slide.setSlideEdge(Gravity.BOTTOM);
+            slide.setInterpolator(new LinearInterpolator());
+            slide.setDuration(500);
+            return slide;
+        }
     }
 
     public static class MyTimerTaskAddMoneyAuto extends TimerTask {
