@@ -28,7 +28,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Кто аббас?, Пидарас!
+    //Кто аббас?, Красава!
 
     // count_money - количество основной валюты "денег"
     // total_score - общее количество очков заработанных за игру
