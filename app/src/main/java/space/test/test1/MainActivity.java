@@ -9,9 +9,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,14 +16,9 @@ import android.transition.Slide;
 import android.transition.TransitionManager;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -151,12 +143,6 @@ public class MainActivity extends AppCompatActivity {
     ObjectAnimator ObjectAnimation_shop_hidde;
 
 
-    private ImageView mAnimAndroid;
-
-    FrameLayout Frame_piw;
-    Button ship;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,26 +236,9 @@ public class MainActivity extends AppCompatActivity {
         shop_appearance = (ImageButton) findViewById(R.id.shop_appearance);
         shop_hidde = (Button) findViewById(R.id.shop_hidde);
         ScrollView = (ScrollView) findViewById(R.id.ScrollView);
-        if (ScrollView.getVisibility() == View.GONE) {
-            ScrollView.setVisibility(View.INVISIBLE);
-        }
-
         //FrameLayout_shop_test = (FrameLayout)findViewById(R.id.FrameLayout_shop_test);
         //Animation_shop_appearance = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_appearence);
         //Animation_shop_hidde = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_hidde);
-
-        mAnimAndroid = (ImageView) findViewById(R.id.mAnimAndroid);
-        Drawable drawable = mAnimAndroid.getDrawable();
-        if (drawable instanceof Animatable) {
-            ((Animatable) drawable).start();
-        }
-
-        //Анимация стрельбы
-        Frame_piw = (FrameLayout) findViewById(R.id.Frame_piw);
-        ship = (Button) findViewById(R.id.ship);
-        if (Frame_piw.getVisibility() == View.GONE) {
-            Frame_piw.setVisibility(View.INVISIBLE);
-        }
     }
 
     void output_to_the_screen() {
@@ -402,68 +371,6 @@ public class MainActivity extends AppCompatActivity {
 
         shop_appearance.setOnClickListener(bottomMenuClickListener);
         shop_hidde.setOnClickListener(bottomMenuClickListener);
-
-
-        ship.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animationPiwPiw.animationPiwPiw(Frame_piw);
-            }
-        });
-    }
-
-    //Класс отвечающий за анимацию стрельбы
-    private static class animationPiwPiw {
-        //Основной метод, в который передается ImageView
-        //Настройка анимации
-        //Выборка в какое состояние должен перейти контейнер
-        public static void animationPiwPiw(FrameLayout frameLayout) {
-            TransitionManager.beginDelayedTransition(frameLayout, makeSlideTransition());
-            itemPiwVisible(frameLayout);
-            itemPiwMove(frameLayout);
-            TransitionManager.beginDelayedTransition(frameLayout, makeSlideTransition());
-            itemPiwHidde(frameLayout);
-        }
-
-        private static void itemPiwHidde(FrameLayout frameLayout) {
-            frameLayout.setVisibility(View.GONE);
-        }
-
-        private static void itemPiwMove(FrameLayout frameLayout) {
-            TranslateAnimation animation = new TranslateAnimation(0, 0, 0, -400);
-            animation.setDuration(200);
-            animation.setFillAfter(true);
-            frameLayout.startAnimation(animation);
-        }
-
-        private static void itemPiwVisible(FrameLayout frameLayout) {
-            frameLayout.setVisibility(View.VISIBLE);
-        }
-
-        //Присет slide анимации
-        private static Slide makeSlideTransition() {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.BOTTOM);
-            slide.setInterpolator(new AccelerateDecelerateInterpolator());
-            slide.setDuration(200);
-            return slide;
-        }
-
-        private static Slide makeSlide1Transition() {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.BOTTOM);
-            slide.setInterpolator(new LinearInterpolator());
-            slide.setDuration(200);
-            return slide;
-        }
-
-        private static Slide makeSlide2Transition() {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.BOTTOM);
-            slide.setInterpolator(new DecelerateInterpolator());
-            slide.setDuration(200);
-            return slide;
-        }
     }
 
 
@@ -478,8 +385,9 @@ public class MainActivity extends AppCompatActivity {
                 case View.VISIBLE:
                         itemBottomMenuHidde(scrollView);
                     break;
+                case View.GONE:
                 case View.INVISIBLE:
-                        itemBottomMenuVisible(scrollView);
+                    itemBottomMenuVisible(scrollView);
                     break;
             }
         }
@@ -497,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
             Slide slide = new Slide();
             slide.setSlideEdge(Gravity.BOTTOM);
             slide.setInterpolator(new LinearInterpolator());
-            slide.setDuration(400);
+            slide.setDuration(500);
             return slide;
         }
     }
