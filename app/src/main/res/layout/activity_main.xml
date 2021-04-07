@@ -7,24 +7,13 @@
     android:elevation="5dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="196dp"
-        android:elevation="2dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_multiplier_add_money_tap" />
-
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:background="#FFFFFF"
         android:elevation="5dp"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -504,5 +493,47 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/count_timer" />
+
+    <ImageView
+        android:id="@+id/mAnimAndroid"
+        android:layout_width="105dp"
+        android:layout_height="106dp"
+        android:layout_marginBottom="56dp"
+        android:elevation="10dp"
+        android:src="@drawable/test2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/ship"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="159dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="159dp"
+        android:elevation="5dp"
+        android:text=" Я корабль"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tap_tap" />
+
+    <FrameLayout
+        android:id="@+id/Frame_piw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tap_tap">
+
+        <ImageView
+            android:id="@+id/piw_piw_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_line" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
