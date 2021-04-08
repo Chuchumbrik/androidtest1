@@ -362,6 +362,7 @@
         android:layout_marginTop="60dp"
         android:text="tap me"
         android:textSize="25sp"
+        android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -520,16 +521,18 @@
         app:layout_constraintTop_toBottomOf="@+id/tap_tap" />
 
     <FrameLayout
+        android:id="@+id/shootingAnimationScene"
         android:layout_width="71dp"
         android:layout_height="174dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#D6D6D6"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ship"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.595"
-        android:elevation="10dp">
+        app:layout_constraintTop_toTopOf="@+id/tap_tap"
+        app:layout_constraintVertical_bias="0.78">
 
-        <include layout="@layout/ammo_1_scene_1" />
+        <include layout="@layout/default_shooting_scene" />
 
     </FrameLayout>
 

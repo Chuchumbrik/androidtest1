@@ -4,22 +4,4 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:layout_width="71dp"
-        android:layout_height="174dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.595">
-
-        <ImageView
-            android:id="@+id/piw_piw_line"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            app:srcCompat="@drawable/ic_line"
-            android:elevation="10dp"/>
-    </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

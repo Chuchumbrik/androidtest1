@@ -12,13 +12,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
+import android.transition.Scene;
 import android.transition.Slide;
 import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -142,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
     ObjectAnimator ObjectAnimation_shop_appearance;
     ObjectAnimator ObjectAnimation_shop_hidde;
 
+    Button ship;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,6 +248,8 @@ public class MainActivity extends AppCompatActivity {
         //FrameLayout_shop_test = (FrameLayout)findViewById(R.id.FrameLayout_shop_test);
         //Animation_shop_appearance = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_appearence);
         //Animation_shop_hidde = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_shop_hidde);
+
+        ship = (Button) findViewById(R.id.ship);
     }
 
     void output_to_the_screen() {
@@ -371,8 +382,128 @@ public class MainActivity extends AppCompatActivity {
 
         shop_appearance.setOnClickListener(bottomMenuClickListener);
         shop_hidde.setOnClickListener(bottomMenuClickListener);
+
+        ship.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animationPiwPiw();
+            }
+        });
     }
 
+    public void animationPiwPiw() {
+        ViewGroup sceneRoot = (ViewGroup) findViewById(R.id.shootingAnimationScene);
+        // You can also inflate a generate a Scene from a layout resource file.
+        final Scene scene1 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_1, this);
+        final Scene scene2 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_2, this);
+        final Scene scene3 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_3, this);
+        final Scene sceneDefault = Scene.getSceneForLayout(sceneRoot, R.layout.default_shooting_scene, this);
+        ImageView imageView = (ImageView) findViewById(R.id.piw_piw_line);
+
+        // опишем свой аналог AutoTransition
+        TransitionSet set = new TransitionSet();
+        set.addTransition(new ChangeBounds());
+        set.addTransition(new Fade());
+        // выполняться они будут одновременно
+        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        set.setDuration(300);
+        set.setInterpolator(new AccelerateInterpolator());
+        TransitionManager.go(scene1, set);
+        try {
+            Thread.sleep(500);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TransitionSet set1 = new TransitionSet();
+        set1.addTransition(new ChangeBounds());
+        // выполняться они будут одновременно
+        set1.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        set1.setDuration(300);
+        set1.setInterpolator(new AccelerateInterpolator());
+        TransitionManager.go(scene2, set1);
+        try {
+            Thread.sleep(500);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TransitionSet set2 = new TransitionSet();
+        set2.addTransition(new ChangeBounds());
+        // выполняться они будут одновременно
+        set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        set2.setDuration(300);
+        set2.setInterpolator(new AccelerateInterpolator());
+        TransitionManager.go(scene3, set2);
+
+
+//        new CountDownTimer(1000, 1000) {
+//
+//            public void onTick(long millisUntilFinished) {
+//
+//            }
+//
+//            public void onFinish() {
+//
+//            }
+//        }.start();
+    }
+
+
+//    //Класс отвечающий за анимацию стрельбы
+//    private static class animationPiwPiw {
+//
+//
+//        //Настройка анимации
+//        //Выборка в какое состояние должен перейти контейнер
+//        public static void animationPiwPiw() {
+//            TransitionManager.beginDelayedTransition(frameLayout, makeSlideTransition());
+//            itemPiwVisible(frameLayout);
+//            itemPiwMove(frameLayout);
+//            TransitionManager.beginDelayedTransition(frameLayout, makeSlideTransition());
+//            itemPiwHidde(frameLayout);
+//        }
+//
+//        private static void itemPiwHidde(FrameLayout frameLayout) {
+//            frameLayout.setVisibility(View.GONE);
+//        }
+//
+//        private static void itemPiwMove(FrameLayout frameLayout) {
+//            TranslateAnimation animation = new TranslateAnimation(0, 0, 0, -400);
+//            animation.setDuration(200);
+//            animation.setFillAfter(true);
+//            frameLayout.startAnimation(animation);
+//        }
+//
+//        private static void itemPiwVisible(FrameLayout frameLayout) {
+//            frameLayout.setVisibility(View.VISIBLE);
+//        }
+//
+//        //Присет slide анимации
+//        private static Slide makeSlideTransition() {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setInterpolator(new AccelerateDecelerateInterpolator());
+//            slide.setDuration(200);
+//            return slide;
+//        }
+//
+//        private static Slide makeSlide1Transition() {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setInterpolator(new LinearInterpolator());
+//            slide.setDuration(200);
+//            return slide;
+//        }
+//
+//        private static Slide makeSlide2Transition() {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.BOTTOM);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            slide.setDuration(200);
+//            return slide;
+//        }
+//    }
 
     //Класс отвечающий за анимацию нижнего меню
     private static class animationBottomMenu {
