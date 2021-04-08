@@ -520,20 +520,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tap_tap" />
 
     <FrameLayout
-        android:id="@+id/Frame_piw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:visibility="gone"
+        android:layout_width="71dp"
+        android:layout_height="174dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tap_tap">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.595"
+        android:elevation="10dp">
 
-        <ImageView
-            android:id="@+id/piw_piw_line"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_line" />
+        <include layout="@layout/ammo_1_scene_1" />
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
