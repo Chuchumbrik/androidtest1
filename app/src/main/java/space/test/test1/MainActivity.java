@@ -397,8 +397,10 @@ public class MainActivity extends AppCompatActivity {
         final Scene scene1 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_1, this);
         final Scene scene2 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_2, this);
         final Scene scene3 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_3, this);
+        final Scene scene4 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_4, this);
         final Scene sceneDefault = Scene.getSceneForLayout(sceneRoot, R.layout.default_shooting_scene, this);
         ImageView imageView = (ImageView) findViewById(R.id.piw_piw_line);
+        final Handler handler = new Handler();
 
         // опишем свой аналог AutoTransition
         TransitionSet set = new TransitionSet();
@@ -406,35 +408,64 @@ public class MainActivity extends AppCompatActivity {
         set.addTransition(new Fade());
         // выполняться они будут одновременно
         set.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        set.setDuration(300);
+        set.setDuration(75);
         set.setInterpolator(new AccelerateInterpolator());
         TransitionManager.go(scene1, set);
-        try {
-            Thread.sleep(500);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        TransitionSet set1 = new TransitionSet();
-        set1.addTransition(new ChangeBounds());
-        // выполняться они будут одновременно
-        set1.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        set1.setDuration(300);
-        set1.setInterpolator(new AccelerateInterpolator());
-        TransitionManager.go(scene2, set1);
-        try {
-            Thread.sleep(500);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TransitionSet set1 = new TransitionSet();
+                set1.addTransition(new ChangeBounds());
+                // выполняться они будут одновременно
+                set1.setOrdering(TransitionSet.ORDERING_TOGETHER);
+                set1.setDuration(200);
+                set1.setInterpolator(new AccelerateInterpolator());
+                TransitionManager.go(scene2, set1);
+            }
+        }, 80);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        TransitionSet set2 = new TransitionSet();
-        set2.addTransition(new ChangeBounds());
-        // выполняться они будут одновременно
-        set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        set2.setDuration(300);
-        set2.setInterpolator(new AccelerateInterpolator());
-        TransitionManager.go(scene3, set2);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TransitionSet set2 = new TransitionSet();
+                set2.addTransition(new ChangeBounds());
+                // выполняться они будут одновременно
+                set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
+                set2.setDuration(75);
+                set2.setInterpolator(new AccelerateInterpolator());
+                TransitionManager.go(scene3, set2);
+            }
+        }, 330);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TransitionSet set2 = new TransitionSet();
+                set2.addTransition(new ChangeBounds());
+                // выполняться они будут одновременно
+                set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
+                set2.setDuration(120);
+                set2.setInterpolator(new AccelerateInterpolator());
+                TransitionManager.go(scene4, set2);
+            }
+        }, 500);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TransitionSet set2 = new TransitionSet();
+                set2.addTransition(new ChangeBounds());
+                set.addTransition(new Fade());
+                // выполняться они будут одновременно
+                set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
+                set2.setDuration(100);
+                set2.setInterpolator(new AccelerateInterpolator());
+                TransitionManager.go(sceneDefault, set2);
+            }
+        }, 620);
+
+
 
 
 //        new CountDownTimer(1000, 1000) {
