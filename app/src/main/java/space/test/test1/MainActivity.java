@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.transition.AutoTransition;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
 import android.transition.Scene;
@@ -392,78 +393,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void animationPiwPiw() {
-        ViewGroup sceneRoot = (ViewGroup) findViewById(R.id.shootingAnimationScene);
-        // You can also inflate a generate a Scene from a layout resource file.
-        final Scene scene1 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_1, this);
-        final Scene scene2 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_2, this);
-        final Scene scene3 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_3, this);
-        final Scene scene4 = Scene.getSceneForLayout(sceneRoot, R.layout.ammo_1_scene_4, this);
-        final Scene sceneDefault = Scene.getSceneForLayout(sceneRoot, R.layout.default_shooting_scene, this);
+        ViewGroup FrameLayout_piw_piw = (ViewGroup) findViewById(R.id.FrameLayout_piw_piw);
         ImageView imageView = (ImageView) findViewById(R.id.piw_piw_line);
         final Handler handler = new Handler();
 
-        // опишем свой аналог AutoTransition
-        TransitionSet set = new TransitionSet();
-        set.addTransition(new ChangeBounds());
-        set.addTransition(new Fade());
-        // выполняться они будут одновременно
-        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        set.setDuration(75);
-        set.setInterpolator(new AccelerateInterpolator());
-        TransitionManager.go(scene1, set);
+
+        TransitionSet set1 = new TransitionSet();
+        set1.setDuration(200);
+        set1.addTransition(new ChangeBounds());
+        set1.addTransition(new Fade());
+        TransitionManager.beginDelayedTransition(FrameLayout_piw_piw, set1);
+        imageView. setImageResource(R.drawable.ic_line);
+        FrameLayout_piw_piw.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.VISIBLE);
+
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                TransitionSet set1 = new TransitionSet();
-                set1.addTransition(new ChangeBounds());
-                // выполняться они будут одновременно
-                set1.setOrdering(TransitionSet.ORDERING_TOGETHER);
-                set1.setDuration(200);
-                set1.setInterpolator(new AccelerateInterpolator());
-                TransitionManager.go(scene2, set1);
+                TranslateAnimation animation = new TranslateAnimation(0, 0, 0, -400);
+                animation.setDuration(200);
+                animation.setFillAfter(true);
+                FrameLayout_piw_piw.startAnimation(animation);
             }
-        }, 80);
+        }, 100);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                TransitionSet set2 = new TransitionSet();
-                set2.addTransition(new ChangeBounds());
-                // выполняться они будут одновременно
-                set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
-                set2.setDuration(75);
-                set2.setInterpolator(new AccelerateInterpolator());
-                TransitionManager.go(scene3, set2);
+                TransitionSet set = new TransitionSet();
+                set.setDuration(200);
+                set.addTransition(new ChangeBounds());
+                TransitionManager.beginDelayedTransition(FrameLayout_piw_piw, set);
+                imageView.setImageResource(R.drawable.ic_line_scene_2);
             }
-        }, 330);
+        }, 310);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                TransitionSet set2 = new TransitionSet();
-                set2.addTransition(new ChangeBounds());
-                // выполняться они будут одновременно
-                set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
-                set2.setDuration(120);
-                set2.setInterpolator(new AccelerateInterpolator());
-                TransitionManager.go(scene4, set2);
+                TransitionSet set = new TransitionSet();
+                set.setDuration(200);
+                set.addTransition(new ChangeBounds());
+                TransitionManager.beginDelayedTransition(FrameLayout_piw_piw, set);
+                imageView.setImageResource(R.drawable.ic_line_scene_4);
             }
-        }, 500);
+        }, 570);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                TransitionSet set2 = new TransitionSet();
-                set2.addTransition(new ChangeBounds());
-                set.addTransition(new Fade());
-                // выполняться они будут одновременно
-                set2.setOrdering(TransitionSet.ORDERING_TOGETHER);
-                set2.setDuration(100);
-                set2.setInterpolator(new AccelerateInterpolator());
-                TransitionManager.go(sceneDefault, set2);
+                TransitionManager.beginDelayedTransition(FrameLayout_piw_piw, new AutoTransition());
+                imageView.setVisibility(View.GONE);
+                FrameLayout_piw_piw.setVisibility(View.GONE);
+
+                TranslateAnimation animation = new TranslateAnimation(0, 0, 0, 400);
             }
-        }, 620);
+        }, 900);
 
 
 

@@ -521,6 +521,30 @@
         app:layout_constraintTop_toBottomOf="@+id/tap_tap" />
 
     <FrameLayout
+        android:id="@+id/FrameLayout_piw_piw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:elevation="3dp"
+        android:foregroundGravity="bottom|center_horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/ship"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/piw_piw_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_line" />
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/shootingAnimationScene"
         android:layout_width="71dp"
         android:layout_height="174dp"
@@ -531,8 +555,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tap_tap"
         app:layout_constraintVertical_bias="0.78">
-
-        <include layout="@layout/default_shooting_scene" />
 
     </FrameLayout>
 
